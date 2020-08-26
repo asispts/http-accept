@@ -1,0 +1,13 @@
+parameters:
+    level: max
+    paths:
+        - src
+        - tests/Units
+
+    ignoreErrors:
+        -
+            message: '#[\w\\]+::(set[uU]p|test\w+)\(\) has no return typehint specified#'
+            path: tests/
+
+    # Miscellaneous parameters
+    inferPrivatePropertyTypeFromConstructor: true

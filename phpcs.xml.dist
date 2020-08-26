@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset>
+  <arg name="colors"/>
+  <arg name="parallel" value="8"/>
+  <arg value="psv"/>
+  <arg name="extensions" value="php"/>
+
+  <file>src</file>
+  <file>tests</file>
+
+  <exclude-pattern>vendor</exclude-pattern>
+  <exclude-pattern>tests/Data</exclude-pattern>
+
+  <rule ref="ptscs"/>
+
+  <rule ref="Squiz.Arrays.ArrayDeclaration">
+    <exclude name="Squiz.Arrays.ArrayDeclaration.SingleLineNotAllowed"/>
+  </rule>
+
+  <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
+    <exclude-pattern>tests</exclude-pattern>
+  </rule>
+
+</ruleset>
