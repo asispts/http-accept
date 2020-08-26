@@ -8,6 +8,10 @@ parameters:
         -
             message: '#[\w\\]+::(set[uU]p|test\w+)\(\) has no return typehint specified#'
             path: tests/
+        -
+            message: '#Cannot call method [\w\(\)]+ on [\w\\]+\\MediaType\|null#'
+            path: tests/
+
 
     # Miscellaneous parameters
     inferPrivatePropertyTypeFromConstructor: true
