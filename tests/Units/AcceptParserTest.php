@@ -49,7 +49,7 @@ final class AcceptParserTest extends TestCase
     public function testInvalidParameterFormat()
     {
         $list = $this->parser->parse('type/subtype;level');
-        $media = $list->preferedMedia(0);
+        $media = $list->preferredMedia(0);
 
         $this->assertSame('type/subtype', $media->name());
         $this->assertSame('type/subtype', $media->mimetype());
@@ -61,7 +61,7 @@ final class AcceptParserTest extends TestCase
     public function testAsteriskOnly()
     {
         $list = $this->parser->parse('*');
-        $media = $list->preferedMedia(0);
+        $media = $list->preferredMedia(0);
 
         $this->assertSame('*/*', $media->name());
         $this->assertSame('*/*', $media->mimetype());
@@ -73,7 +73,7 @@ final class AcceptParserTest extends TestCase
     public function testParseEmptyQuality()
     {
         $list = $this->parser->parse('type/subtype;q=');
-        $media = $list->preferedMedia(0);
+        $media = $list->preferredMedia(0);
 
         $this->assertSame('type/subtype', $media->name());
         $this->assertSame('type/subtype', $media->mimetype());
@@ -85,7 +85,7 @@ final class AcceptParserTest extends TestCase
     public function testParseFloatQuality()
     {
         $list = $this->parser->parse('type/subtype;q=0.5');
-        $media = $list->preferedMedia(0);
+        $media = $list->preferredMedia(0);
 
         $this->assertSame('type/subtype', $media->name());
         $this->assertSame('type/subtype', $media->mimetype());
@@ -97,7 +97,7 @@ final class AcceptParserTest extends TestCase
     public function testParseIntegerQuality()
     {
         $list = $this->parser->parse('type/subtype;q=1');
-        $media = $list->preferedMedia(0);
+        $media = $list->preferredMedia(0);
 
         $this->assertSame('type/subtype', $media->name());
         $this->assertSame('type/subtype', $media->mimetype());
@@ -109,7 +109,7 @@ final class AcceptParserTest extends TestCase
     public function testParseExtension()
     {
         $list = $this->parser->parse(' type / subtype ; level = 1 ; level = 2');
-        $media = $list->preferedMedia(0);
+        $media = $list->preferredMedia(0);
 
         $this->assertSame('type/subtype;level=1;level=2', $media->name());
         $this->assertSame('type/subtype', $media->mimetype());
@@ -131,39 +131,39 @@ final class AcceptParserTest extends TestCase
     {
         $list = $this->parser->parse('type/subtype, type / subtype');
 
-        $this->assertNull($list->preferedMedia(-1));
-        $this->assertNotNull($list->preferedMedia(0));
-        $this->assertNull($list->preferedMedia(1));
+        $this->assertNull($list->preferredMedia(-1));
+        $this->assertNotNull($list->preferredMedia(0));
+        $this->assertNull($list->preferredMedia(1));
     }
 
     public function testSortWithoutQuality()
     {
         $list = $this->parser->parse('text/html, text/html;level=1, */*, text/html;level=1;level=2, text/*');
 
-        $this->assertSame('text/html;level=1;level=2', $list->preferedMedia(0)->name());
-        $this->assertSame('text/html;level=1', $list->preferedMedia(1)->name());
-        $this->assertSame('text/html', $list->preferedMedia(2)->name());
-        $this->assertSame('text/*', $list->preferedMedia(3)->name());
-        $this->assertSame('*/*', $list->preferedMedia(4)->name());
+        $this->assertSame('text/html;level=1;level=2', $list->preferredMedia(0)->name());
+        $this->assertSame('text/html;level=1', $list->preferredMedia(1)->name());
+        $this->assertSame('text/html', $list->preferredMedia(2)->name());
+        $this->assertSame('text/*', $list->preferredMedia(3)->name());
+        $this->assertSame('*/*', $list->preferredMedia(4)->name());
     }
 
     public function testSortSimilarScore()
     {
         $list = $this->parser->parse('*/*, text/html;level=1;level=2 , text/*, text/css;level=1;level=2');
 
-        $this->assertSame('text/html;level=1;level=2', $list->preferedMedia(0)->name());
-        $this->assertSame('text/css;level=1;level=2', $list->preferedMedia(1)->name());
-        $this->assertSame('text/*', $list->preferedMedia(2)->name());
-        $this->assertSame('*/*', $list->preferedMedia(3)->name());
+        $this->assertSame('text/html;level=1;level=2', $list->preferredMedia(0)->name());
+        $this->assertSame('text/css;level=1;level=2', $list->preferredMedia(1)->name());
+        $this->assertSame('text/*', $list->preferredMedia(2)->name());
+        $this->assertSame('*/*', $list->preferredMedia(3)->name());
     }
 
     public function testSortWithQuality()
     {
         $list = $this->parser->parse('*/*;q=1, text/html;q=0.25 , text/*;q=0.75, text/css;q=0.5');
 
-        $this->assertSame('text/css', $list->preferedMedia(0)->name());
-        $this->assertSame('text/html', $list->preferedMedia(1)->name());
-        $this->assertSame('text/*', $list->preferedMedia(2)->name());
-        $this->assertSame('*/*', $list->preferedMedia(3)->name());
+        $this->assertSame('text/css', $list->preferredMedia(0)->name());
+        $this->assertSame('text/html', $list->preferredMedia(1)->name());
+        $this->assertSame('text/*', $list->preferredMedia(2)->name());
+        $this->assertSame('*/*', $list->preferredMedia(3)->name());
     }
 }
