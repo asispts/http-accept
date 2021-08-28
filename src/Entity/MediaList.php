@@ -27,7 +27,7 @@ final class MediaList
         return count($this->media);
     }
 
-    public function preferedMedia(int $pos) : ?MediaType
+    public function preferredMedia(int $pos) : ?MediaType
     {
         if (empty($this->order)) {
             uasort($this->score, [$this, 'uasort']);
