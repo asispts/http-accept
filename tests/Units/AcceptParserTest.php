@@ -3,6 +3,7 @@
 use PHPUnit\Framework\TestCase;
 use Xynha\HttpAccept\AcceptParser;
 use Xynha\HttpAccept\Entity\MediaType;
+use Xynha\HttpAccept\Entity\Parameter;
 
 final class AcceptParserTest extends TestCase
 {
@@ -54,9 +55,10 @@ final class AcceptParserTest extends TestCase
 
         $this->assertSame('type/subtype', $media->name());
         $this->assertSame('type/subtype', $media->mimetype());
-        $this->assertSame([], $media->parameters());
         $this->assertSame(1.0, $media->quality());
         $this->assertSame(1101.0, $media->score());
+        $this->assertSame('', $media->parameter()->toString());
+        $this->assertSame(0, $media->parameter()->count());
     }
 
     public function testAsteriskOnly()
@@ -66,9 +68,10 @@ final class AcceptParserTest extends TestCase
 
         $this->assertSame('*/*', $media->name());
         $this->assertSame('*/*', $media->mimetype());
-        $this->assertSame([], $media->parameters());
         $this->assertSame(1.0, $media->quality());
         $this->assertSame(1.0, $media->score());
+        $this->assertSame('', $media->parameter()->toString());
+        $this->assertSame(0, $media->parameter()->count());
     }
 
     public function testParseEmptyQuality()
@@ -78,9 +81,10 @@ final class AcceptParserTest extends TestCase
 
         $this->assertSame('type/subtype', $media->name());
         $this->assertSame('type/subtype', $media->mimetype());
-        $this->assertSame([], $media->parameters());
         $this->assertSame(1.0, $media->quality());
         $this->assertSame(1101.0, $media->score());
+        $this->assertSame('', $media->parameter()->toString());
+        $this->assertSame(0, $media->parameter()->count());
     }
 
     public function testParseFloatQuality()
@@ -90,9 +94,10 @@ final class AcceptParserTest extends TestCase
 
         $this->assertSame('type/subtype', $media->name());
         $this->assertSame('type/subtype', $media->mimetype());
-        $this->assertSame([], $media->parameters());
         $this->assertSame(0.5, $media->quality());
         $this->assertSame(1100.5, $media->score());
+        $this->assertSame('', $media->parameter()->toString());
+        $this->assertSame(0, $media->parameter()->count());
     }
 
     public function testParseIntegerQuality()
@@ -102,21 +107,23 @@ final class AcceptParserTest extends TestCase
 
         $this->assertSame('type/subtype', $media->name());
         $this->assertSame('type/subtype', $media->mimetype());
-        $this->assertSame([], $media->parameters());
         $this->assertSame(1.0, $media->quality());
         $this->assertSame(1101.0, $media->score());
+        $this->assertSame('', $media->parameter()->toString());
+        $this->assertSame(0, $media->parameter()->count());
     }
 
     public function testParseExtension()
     {
-        $list = $this->parser->parse(' type / subtype ; level = 1 ; level = 2');
+        $list = $this->parser->parse(' type / subtype ; attr1 = 1 ; attr2 = 2');
         $media = $list->preferredMedia(0);
 
-        $this->assertSame('type/subtype;level=1;level=2', $media->name());
+        $this->assertSame('type/subtype;attr1=1;attr2=2', $media->name());
         $this->assertSame('type/subtype', $media->mimetype());
-        $this->assertSame(['level=1', 'level=2'], $media->parameters());
         $this->assertSame(1.0, $media->quality());
         $this->assertSame(1121.0, $media->score());
+        $this->assertSame('attr1=1;attr2=2', $media->parameter()->toString());
+        $this->assertSame(2, $media->parameter()->count());
     }
 
     public function testSimilarMediatype()
@@ -139,10 +146,10 @@ final class AcceptParserTest extends TestCase
 
     public function testSortWithoutQuality()
     {
-        $list = $this->parser->parse('text/html, text/html;level=1, */*, text/html;level=1;level=2, text/*');
+        $list = $this->parser->parse('text/html, text/html;attr1=1, */*, text/html;attr1=1;attr2=2, text/*');
 
-        $this->assertSame('text/html;level=1;level=2', $list->preferredMedia(0)->name());
-        $this->assertSame('text/html;level=1', $list->preferredMedia(1)->name());
+        $this->assertSame('text/html;attr1=1;attr2=2', $list->preferredMedia(0)->name());
+        $this->assertSame('text/html;attr1=1', $list->preferredMedia(1)->name());
         $this->assertSame('text/html', $list->preferredMedia(2)->name());
         $this->assertSame('text/*', $list->preferredMedia(3)->name());
         $this->assertSame('*/*', $list->preferredMedia(4)->name());
@@ -150,10 +157,10 @@ final class AcceptParserTest extends TestCase
 
     public function testSortSimilarScore()
     {
-        $list = $this->parser->parse('*/*, text/html;level=1;level=2 , text/*, text/css;level=1;level=2');
+        $list = $this->parser->parse('*/*, text/html;attr1=1;attr2=2 , text/*, text/css;attr1=1;attr2=2');
 
-        $this->assertSame('text/html;level=1;level=2', $list->preferredMedia(0)->name());
-        $this->assertSame('text/css;level=1;level=2', $list->preferredMedia(1)->name());
+        $this->assertSame('text/html;attr1=1;attr2=2', $list->preferredMedia(0)->name());
+        $this->assertSame('text/css;attr1=1;attr2=2', $list->preferredMedia(1)->name());
         $this->assertSame('text/*', $list->preferredMedia(2)->name());
         $this->assertSame('*/*', $list->preferredMedia(3)->name());
     }
@@ -172,11 +179,29 @@ final class AcceptParserTest extends TestCase
     {
         $list = $this->parser->parse('*/*;q=1, text/html;q=0.25 , text/*;q=0.75, text/css;q=0.5');
 
-        $expected[] = new MediaType('text/css', 0.5, []);
-        $expected[] = new MediaType('text/html', 0.25, []);
-        $expected[] = new MediaType('text/*', 0.75, []);
-        $expected[] = new MediaType('*/*', 1, []);
+        $expected[] = new MediaType('text/css', 0.5, new Parameter);
+        $expected[] = new MediaType('text/html', 0.25, new Parameter);
+        $expected[] = new MediaType('text/*', 0.75, new Parameter);
+        $expected[] = new MediaType('*/*', 1, new Parameter);
 
         $this->assertEquals($expected, $list->all());
+    }
+
+    public function testSameParameterName()
+    {
+        $list = $this->parser->parse('type/subtype;level=1;level=2');
+        $media = $list->preferredMedia(0);
+
+        $this->assertSame(1, $media->parameter()->count());
+        $this->assertSame('2', $media->parameter()->get('level'));
+    }
+
+    public function testGetUndefinedParameterName()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Undefined parameter name');
+
+        $list = $this->parser->parse('type/subtype;level');
+        $list->preferredMedia(0)->parameter()->get('level');
     }
 }

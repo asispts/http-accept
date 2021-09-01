@@ -5,6 +5,7 @@ namespace Xynha\HttpAccept;
 use InvalidArgumentException;
 use Xynha\HttpAccept\Entity\MediaList;
 use Xynha\HttpAccept\Entity\MediaType;
+use Xynha\HttpAccept\Entity\Parameter;
 
 final class AcceptParser
 {
@@ -40,7 +41,7 @@ final class AcceptParser
         }
 
         $quality = null;
-        $params = [];
+        $param = new Parameter();
         foreach ($parts as $item) {
             $tparams = explode('=', $item);
             $key = trim($tparams[0] ?? '');
@@ -51,11 +52,11 @@ final class AcceptParser
                     $quality = !empty($value) ? (float)$value : null;
                     break;
                 case !empty($key) && !empty($value):
-                    $params[] = $key . '=' . $value;
+                    $param->add($key, $value);
                     break;
             }
         }
 
-        return new MediaType($mime, $quality, $params);
+        return new MediaType($mime, $quality, $param);
     }
 }
