@@ -52,7 +52,7 @@ final class AcceptParser
                     $quality = !empty($value) ? (float)$value : null;
                     break;
                 case !empty($key) && !empty($value):
-                    $param->add($key, $value);
+                    $param->add($key, trim($value, '"'));
                     break;
             }
         }

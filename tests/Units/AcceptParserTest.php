@@ -204,4 +204,12 @@ final class AcceptParserTest extends TestCase
         $list = $this->parser->parse('type/subtype;level');
         $list->preferredMedia(0)->parameter()->get('level');
     }
+
+    public function testQuotedParameter()
+    {
+        $list = $this->parser->parse('type/subtype;quoted="test value"');
+        $media = $list->preferredMedia(0);
+
+        $this->assertSame('test value', $media->parameter()->get('quoted'));
+    }
 }
