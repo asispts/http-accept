@@ -2,6 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use Xynha\HttpAccept\AcceptParser;
+use Xynha\HttpAccept\Entity\MediaType;
 
 final class AcceptParserTest extends TestCase
 {
@@ -165,5 +166,17 @@ final class AcceptParserTest extends TestCase
         $this->assertSame('text/html', $list->preferredMedia(1)->name());
         $this->assertSame('text/*', $list->preferredMedia(2)->name());
         $this->assertSame('*/*', $list->preferredMedia(3)->name());
+    }
+
+    public function testGetAllMedia()
+    {
+        $list = $this->parser->parse('*/*;q=1, text/html;q=0.25 , text/*;q=0.75, text/css;q=0.5');
+
+        $expected[] = new MediaType('text/css', 0.5, []);
+        $expected[] = new MediaType('text/html', 0.25, []);
+        $expected[] = new MediaType('text/*', 0.75, []);
+        $expected[] = new MediaType('*/*', 1, []);
+
+        $this->assertEquals($expected, $list->all());
     }
 }

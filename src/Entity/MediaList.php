@@ -19,6 +19,9 @@ final class MediaList
         $new = clone $this;
         $new->media[$media->name()] = $media;
         $new->score[$media->name()] = $media->score();
+
+        $new->sortByScore();
+
         return $new;
     }
 
@@ -29,13 +32,31 @@ final class MediaList
 
     public function preferredMedia(int $pos) : ?MediaType
     {
-        if (empty($this->order)) {
-            uasort($this->score, [$this, 'uasort']);
-            $this->order = array_keys($this->score);
-        }
-
         $key = $this->order[$pos] ?? '';
         return $this->media[$key] ?? null;
+    }
+
+    /**
+     * @return MediaType[]
+     */
+    public function all(): array
+    {
+        $tmp = [];
+        foreach ($this->order as $key) {
+            $tmp[] = $this->media[$key];
+        }
+
+        return $tmp;
+    }
+
+    private function sortByScore(): void
+    {
+        if ($this->order !== null && count($this->order) === count($this->score)) {
+            return;
+        }
+
+        uasort($this->score, [$this, 'uasort']);
+        $this->order = array_keys($this->score);
     }
 
     private function uasort(float $valA, float $valB) : int
