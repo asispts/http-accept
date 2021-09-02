@@ -1,10 +1,13 @@
 # HTTP Accept
-PHP Parser for dealing with HTTP `Accept`, `Accept-Language`, `Accept-Encoding`, and `Accept-Charset` headers
+PHP Parser to deal with HTTP `Accept`, `Accept-Language`, `Accept-Encoding`, and `Accept-Charset` headers
+
+[![Build](https://github.com/pattisahusiwa/http-accept/workflows/Build/badge.svg?branch=master)](https://github.com/pattisahusiwa/http-accept/actions)
+[![License](https://img.shields.io/github/license/pattisahusiwa/http-accept)](https://github.com/pattisahusiwa/http-accept/blob/master/LICENSE)
 
 ## Installation
 Use [composer](https://getcomposer.org/) to install the library.
 ```bash
-composer require xynha/http-accept
+composer require hnet/http-accept
 ```
 
 ## Usage
