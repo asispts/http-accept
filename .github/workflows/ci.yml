@@ -35,7 +35,7 @@ jobs:
 
             - name: Install dependencies
               if: steps.composer-cache.outputs.cache-hit != 'true'
-              run: composer install --prefer-dist --no-progress --no-suggest
+              run: composer install --prefer-dist --no-progress
 
             - name: Show installed coding standards
               run: vendor/bin/phpcs -i
@@ -80,7 +80,7 @@ jobs:
 
             - name: Install dependencies
               if: steps.composer-cache.outputs.cache-hit != 'true'
-              run: composer install --prefer-dist --no-progress --no-suggest --ignore-platform-reqs
+              run: composer install --prefer-dist --no-progress
 
             - name: phpunit
               run: vendor/bin/phpunit --no-coverage
