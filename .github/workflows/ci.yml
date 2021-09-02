@@ -1,0 +1,86 @@
+name: Build
+on: [push, pull_request]
+
+jobs:
+    lint:
+        strategy:
+            matrix:
+                operating-system: [ubuntu-latest]
+                php-versions: ["7.4"]
+        runs-on: ${{ matrix.operating-system }}
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Setup PHP, with composer and extensions
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php-versions }}
+                  tools: phpcs, phpstan
+                  coverage: none
+
+            - name: Show composer version
+              run: composer -V
+
+            - name: Validate composer.json and composer.lock
+              run: composer validate
+
+            - name: Cache Composer packages
+              id: composer-cache
+              uses: actions/cache@v2
+              with:
+                  path: vendor
+                  key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+                  restore-keys: |
+                      ${{ runner.os }}-composer-
+
+            - name: Install dependencies
+              if: steps.composer-cache.outputs.cache-hit != 'true'
+              run: composer install --prefer-dist --no-progress --no-suggest
+
+            - name: Show installed coding standards
+              run: vendor/bin/phpcs -i
+
+            - name: coding standard
+              run: vendor/bin/phpcs
+
+            - name: phpstan
+              run: phpstan analyse
+
+    test:
+        strategy:
+            fail-fast: false
+            matrix:
+                operating-system: [ubuntu-latest, windows-latest, macos-latest]
+                php-versions: ["7.1", "7.2", "7.3", "7.4", "8.0"]
+
+        runs-on: ${{ matrix.operating-system }}
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Setup PHP, with composer and extensions
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php-versions }}
+                  coverage: none
+
+            - name: Show composer version
+              run: composer -V
+
+            - name: Validate composer.json and composer.lock
+              run: composer validate
+
+            - name: Cache Composer packages
+              id: composer-cache
+              uses: actions/cache@v2
+              with:
+                  path: vendor
+                  key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+                  restore-keys: |
+                      ${{ runner.os }}-composer-
+
+            - name: Install dependencies
+              if: steps.composer-cache.outputs.cache-hit != 'true'
+              run: composer install --prefer-dist --no-progress --no-suggest --ignore-platform-reqs
+
+            - name: phpunit
+              run: vendor/bin/phpunit --no-coverage
