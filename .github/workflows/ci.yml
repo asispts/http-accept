@@ -24,7 +24,17 @@ jobs:
             - name: Validate composer.json and composer.lock
               run: composer validate
 
+            - name: Cache Composer packages
+              id: composer-cache
+              uses: actions/cache@v2
+              with:
+                  path: vendor
+                  key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+                  restore-keys: |
+                      ${{ runner.os }}-composer-
+
             - name: Install dependencies
+              if: steps.composer-cache.outputs.cache-hit != 'true'
               run: composer install --prefer-dist --no-progress
 
             - name: Show installed coding standards
@@ -59,7 +69,17 @@ jobs:
             - name: Validate composer.json and composer.lock
               run: composer validate
 
+            - name: Cache Composer packages
+              id: composer-cache
+              uses: actions/cache@v2
+              with:
+                  path: vendor
+                  key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+                  restore-keys: |
+                      ${{ runner.os }}-composer-
+
             - name: Install dependencies
+              if: steps.composer-cache.outputs.cache-hit != 'true'
               run: composer install --prefer-dist --no-progress
 
             - name: phpunit
