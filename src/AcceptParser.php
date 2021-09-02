@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace Pts\HttpAccept;
+namespace HttpAccept;
 
 use InvalidArgumentException;
-use Pts\HttpAccept\Entity\MediaList;
-use Pts\HttpAccept\Entity\MediaType;
-use Pts\HttpAccept\Entity\Parameters;
+use HttpAccept\Entity\MediaList;
+use HttpAccept\Entity\MediaType;
+use HttpAccept\Entity\Parameters;
 
 final class AcceptParser
 {

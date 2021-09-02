@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Pts\HttpAccept\Entity;
+namespace HttpAccept\Entity;
 
 use InvalidArgumentException;
 

@@ -1,5 +1,5 @@
 {
-    "name": "pts/http-accept",
+    "name": "hnet/http-accept",
     "description": "PHP Parser to deal with HTTP Accept, Accept-Language, Accept-Encoding, and Accept-Charset headers",
     "keywords": ["http", "http accept", "Accept", "Accept-Language", "Accept-Encoding", "Accept-Charset"],
     "type": "library",
@@ -22,7 +22,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Pts\\HttpAccept\\": "src"
+            "HttpAccept\\": "src"
         }
     },
     "require": {
