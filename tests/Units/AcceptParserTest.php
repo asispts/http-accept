@@ -3,7 +3,7 @@
 use PHPUnit\Framework\TestCase;
 use Xynha\HttpAccept\AcceptParser;
 use Xynha\HttpAccept\Entity\MediaType;
-use Xynha\HttpAccept\Entity\Parameter;
+use Xynha\HttpAccept\Entity\Parameters;
 
 final class AcceptParserTest extends TestCase
 {
@@ -179,10 +179,10 @@ final class AcceptParserTest extends TestCase
     {
         $list = $this->parser->parse('*/*;q=1, text/html;q=0.25 , text/*;q=0.75, text/css;q=0.5');
 
-        $expected[] = new MediaType('text/css', 0.5, new Parameter);
-        $expected[] = new MediaType('text/html', 0.25, new Parameter);
-        $expected[] = new MediaType('text/*', 0.75, new Parameter);
-        $expected[] = new MediaType('*/*', 1, new Parameter);
+        $expected[] = new MediaType('text/css', 0.5, new Parameters);
+        $expected[] = new MediaType('text/html', 0.25, new Parameters);
+        $expected[] = new MediaType('text/*', 0.75, new Parameters);
+        $expected[] = new MediaType('*/*', 1, new Parameters);
 
         $this->assertEquals($expected, $list->all());
     }

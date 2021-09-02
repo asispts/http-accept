@@ -4,7 +4,7 @@ namespace Xynha\HttpAccept\Entity;
 
 use InvalidArgumentException;
 
-final class Parameter
+final class Parameters
 {
 
     /**

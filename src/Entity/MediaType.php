@@ -20,7 +20,7 @@ final class MediaType
     /** @var float */
     private $score;
 
-    public function __construct(string $mime, ?float $quality, Parameter $param)
+    public function __construct(string $mime, ?float $quality, Parameters $param)
     {
         list($type, $subtype) = explode('/', $mime);
 
@@ -65,7 +65,7 @@ final class MediaType
         return $this->quality;
     }
 
-    public function parameter(): Parameter
+    public function parameter(): Parameters
     {
         return $this->param;
     }
@@ -80,7 +80,7 @@ final class MediaType
         return $this->name;
     }
 
-    private function calculateScore(string $type, string $subtype, float $quality, Parameter $param) : float
+    private function calculateScore(string $type, string $subtype, float $quality, Parameters $param) : float
     {
         $score = 0.0;
         if (!empty($type) && $type !== '*') {
