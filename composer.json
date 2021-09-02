@@ -1,7 +1,7 @@
 {
-    "name": "xynha/http-accept",
-    "description": "PHP Parser for dealing with HTTP Accept, Accept-Language, Accept-Encoding, and Accept-Charset headers",
-    "keywords": [],
+    "name": "pts/http-accept",
+    "description": "PHP Parser to deal with HTTP Accept, Accept-Language, Accept-Encoding, and Accept-Charset headers",
+    "keywords": ["http", "http accept", "Accept", "Accept-Language", "Accept-Encoding", "Accept-Charset"],
     "type": "library",
     "license": "Apache-2.0",
     "authors": [
@@ -22,7 +22,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Xynha\\HttpAccept\\": "src"
+            "Pts\\HttpAccept\\": "src"
         }
     },
     "require": {

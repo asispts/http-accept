@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace Xynha\HttpAccept;
+namespace Pts\HttpAccept;
 
 use InvalidArgumentException;
-use Xynha\HttpAccept\Entity\MediaList;
-use Xynha\HttpAccept\Entity\MediaType;
-use Xynha\HttpAccept\Entity\Parameters;
+use Pts\HttpAccept\Entity\MediaList;
+use Pts\HttpAccept\Entity\MediaType;
+use Pts\HttpAccept\Entity\Parameters;
 
 final class AcceptParser
 {

@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use Xynha\HttpAccept\AcceptParser;
-use Xynha\HttpAccept\Entity\MediaType;
-use Xynha\HttpAccept\Entity\Parameters;
+use Pts\HttpAccept\AcceptParser;
+use Pts\HttpAccept\Entity\MediaType;
+use Pts\HttpAccept\Entity\Parameters;
 
 final class AcceptParserTest extends TestCase
 {

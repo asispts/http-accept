@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Xynha\HttpAccept\Entity;
+namespace Pts\HttpAccept\Entity;
 
 final class MediaList
 {
