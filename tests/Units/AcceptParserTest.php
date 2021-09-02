@@ -212,4 +212,13 @@ final class AcceptParserTest extends TestCase
 
         $this->assertSame('test value', $media->parameter()->get('quoted'));
     }
+
+    public function testGetAllParameters()
+    {
+        $list = $this->parser->parse('type/subtype;attr1=1;attr2=2');
+        $media = $list->preferredMedia(0);
+
+        $expected = ['attr1' => '1', 'attr2' => '2'];
+        $this->assertSame($expected, $media->parameter()->all());
+    }
 }

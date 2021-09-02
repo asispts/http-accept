@@ -45,4 +45,12 @@ final class Parameters
 
         return $this->params[$key];
     }
+
+    /**
+     * @return array<string,string>
+     */
+    public function all(): array
+    {
+        return $this->params;
+    }
 }
