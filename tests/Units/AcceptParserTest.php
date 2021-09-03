@@ -57,8 +57,8 @@ final class AcceptParserTest extends TestCase
         $this->assertSame('type/subtype', $media->mimetype());
         $this->assertSame(1.0, $media->quality());
         $this->assertSame(1101.0, $media->score());
-        $this->assertSame('', $media->parameter()->toString());
-        $this->assertSame(0, $media->parameter()->count());
+        $this->assertSame('', $media->parameters()->toString());
+        $this->assertSame(0, $media->parameters()->count());
     }
 
     public function testAsteriskOnly()
@@ -70,8 +70,8 @@ final class AcceptParserTest extends TestCase
         $this->assertSame('*/*', $media->mimetype());
         $this->assertSame(1.0, $media->quality());
         $this->assertSame(1.0, $media->score());
-        $this->assertSame('', $media->parameter()->toString());
-        $this->assertSame(0, $media->parameter()->count());
+        $this->assertSame('', $media->parameters()->toString());
+        $this->assertSame(0, $media->parameters()->count());
     }
 
     public function testParseEmptyQuality()
@@ -83,8 +83,8 @@ final class AcceptParserTest extends TestCase
         $this->assertSame('type/subtype', $media->mimetype());
         $this->assertSame(1.0, $media->quality());
         $this->assertSame(1101.0, $media->score());
-        $this->assertSame('', $media->parameter()->toString());
-        $this->assertSame(0, $media->parameter()->count());
+        $this->assertSame('', $media->parameters()->toString());
+        $this->assertSame(0, $media->parameters()->count());
     }
 
     public function testParseFloatQuality()
@@ -96,8 +96,8 @@ final class AcceptParserTest extends TestCase
         $this->assertSame('type/subtype', $media->mimetype());
         $this->assertSame(0.5, $media->quality());
         $this->assertSame(1100.5, $media->score());
-        $this->assertSame('', $media->parameter()->toString());
-        $this->assertSame(0, $media->parameter()->count());
+        $this->assertSame('', $media->parameters()->toString());
+        $this->assertSame(0, $media->parameters()->count());
     }
 
     public function testParseIntegerQuality()
@@ -109,8 +109,8 @@ final class AcceptParserTest extends TestCase
         $this->assertSame('type/subtype', $media->mimetype());
         $this->assertSame(1.0, $media->quality());
         $this->assertSame(1101.0, $media->score());
-        $this->assertSame('', $media->parameter()->toString());
-        $this->assertSame(0, $media->parameter()->count());
+        $this->assertSame('', $media->parameters()->toString());
+        $this->assertSame(0, $media->parameters()->count());
     }
 
     public function testParseExtension()
@@ -122,8 +122,8 @@ final class AcceptParserTest extends TestCase
         $this->assertSame('type/subtype', $media->mimetype());
         $this->assertSame(1.0, $media->quality());
         $this->assertSame(1121.0, $media->score());
-        $this->assertSame('attr1=1;attr2=2', $media->parameter()->toString());
-        $this->assertSame(2, $media->parameter()->count());
+        $this->assertSame('attr1=1;attr2=2', $media->parameters()->toString());
+        $this->assertSame(2, $media->parameters()->count());
     }
 
     public function testSimilarMediatype()
@@ -192,8 +192,8 @@ final class AcceptParserTest extends TestCase
         $list = $this->parser->parse('type/subtype;level=1;level=2');
         $media = $list->preferredMedia(0);
 
-        $this->assertSame(1, $media->parameter()->count());
-        $this->assertSame('2', $media->parameter()->get('level'));
+        $this->assertSame(1, $media->parameters()->count());
+        $this->assertSame('2', $media->parameters()->get('level'));
     }
 
     public function testGetUndefinedParameterName()
@@ -202,7 +202,7 @@ final class AcceptParserTest extends TestCase
         $this->expectExceptionMessage('Undefined parameter name');
 
         $list = $this->parser->parse('type/subtype;level');
-        $list->preferredMedia(0)->parameter()->get('level');
+        $list->preferredMedia(0)->parameters()->get('level');
     }
 
     public function testQuotedParameter()
@@ -210,7 +210,7 @@ final class AcceptParserTest extends TestCase
         $list = $this->parser->parse('type/subtype;quoted="test value"');
         $media = $list->preferredMedia(0);
 
-        $this->assertSame('test value', $media->parameter()->get('quoted'));
+        $this->assertSame('test value', $media->parameters()->get('quoted'));
     }
 
     public function testGetAllParameters()
@@ -219,6 +219,6 @@ final class AcceptParserTest extends TestCase
         $media = $list->preferredMedia(0);
 
         $expected = ['attr1' => '1', 'attr2' => '2'];
-        $this->assertSame($expected, $media->parameter()->all());
+        $this->assertSame($expected, $media->parameters()->all());
     }
 }

@@ -41,7 +41,7 @@ final class AcceptParser
         }
 
         $quality = null;
-        $param = new Parameters();
+        $parameters = new Parameters();
         foreach ($parts as $item) {
             $tparams = explode('=', $item);
             $key = trim($tparams[0] ?? '');
@@ -52,11 +52,11 @@ final class AcceptParser
                     $quality = !empty($value) ? (float)$value : null;
                     break;
                 case !empty($key) && !empty($value):
-                    $param->add($key, trim($value, '"'));
+                    $parameters->add($key, trim($value, '"'));
                     break;
             }
         }
 
-        return new MediaType($mime, $quality, $param);
+        return new MediaType($mime, $quality, $parameters);
     }
 }

@@ -15,12 +15,12 @@ final class MediaType
 
     private $quality;
 
-    private $param;
+    private $parameters;
 
     /** @var float */
     private $score;
 
-    public function __construct(string $mime, ?float $quality, Parameters $param)
+    public function __construct(string $mime, ?float $quality, Parameters $parameters)
     {
         list($type, $subtype) = explode('/', $mime);
 
@@ -31,13 +31,13 @@ final class MediaType
         $this->type = trim($type);
         $this->subtype = trim($subtype);
         $this->quality = $quality;
-        $this->param = $param;
+        $this->parameters = $parameters;
 
-        $this->score = $this->calculateScore($this->type, $this->subtype, $this->quality(), $this->param);
+        $this->score = $this->calculateScore($this->type, $this->subtype, $this->quality(), $this->parameters);
 
         $this->name = $this->type . '/' . $this->subtype;
-        if ($this->param->count() > 0) {
-            $this->name .= ';' . $this->param->toString();
+        if ($this->parameters->count() > 0) {
+            $this->name .= ';' . $this->parameters->toString();
         }
     }
 
@@ -65,9 +65,9 @@ final class MediaType
         return $this->quality;
     }
 
-    public function parameter(): Parameters
+    public function parameters(): Parameters
     {
-        return $this->param;
+        return $this->parameters;
     }
 
     public function score() : float
