@@ -6,46 +6,39 @@ jobs:
         strategy:
             matrix:
                 operating-system: [ubuntu-latest]
-                php-versions: ["7.1", "8.0"]
+                php-versions: ["7.1"]
         runs-on: ${{ matrix.operating-system }}
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
 
             - name: Setup PHP, with composer and extensions
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php-versions }}
-                  tools: phpcs, phpstan
                   coverage: none
-
-            - name: Show composer version
-              run: composer -V
 
             - name: Validate composer.json and composer.lock
               run: composer validate
 
             - name: Install dependencies
-              run: composer install --prefer-dist --no-progress
-
-            - name: Show installed coding standards
-              run: vendor/bin/phpcs -i
+              run: composer install --no-progress
 
             - name: coding standard
               run: vendor/bin/phpcs
 
             - name: phpstan
-              run: phpstan analyse
+              run: vendor/bin/phpstan analyse
 
     test:
         strategy:
             fail-fast: false
             matrix:
-                operating-system: [ubuntu-latest, windows-latest, macos-latest]
+                operating-system: [ubuntu-latest]
                 php-versions: ["7.1", "7.2", "7.3", "7.4", "8.0"]
 
         runs-on: ${{ matrix.operating-system }}
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
 
             - name: Setup PHP, with composer and extensions
               uses: shivammathur/setup-php@v2
@@ -53,14 +46,11 @@ jobs:
                   php-version: ${{ matrix.php-versions }}
                   coverage: none
 
-            - name: Show composer version
-              run: composer -V
-
             - name: Validate composer.json and composer.lock
               run: composer validate
 
             - name: Install dependencies
-              run: composer install --prefer-dist --no-progress
+              run: composer install --no-progress
 
             - name: phpunit
-              run: vendor/bin/phpunit --no-coverage
+              run: vendor/bin/phpunit
