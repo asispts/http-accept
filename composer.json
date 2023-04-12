@@ -36,13 +36,13 @@
         }
     },
     "require": {
-        "php": ">=7.1"
+        "php": ">=7.2"
     },
     "require-dev": {
-        "pattisahusiwa/coding-standard": "^0.3.0",
+        "asispts/ptscs": "1.0.x-dev",
         "phpstan/phpstan": "^1.4",
         "phpstan/phpstan-phpunit": "^1.0",
-        "phpunit/phpunit": "^7.5|^8.5|^9.5"
+        "phpunit/phpunit": "^8.5|^9.5"
     },
     "extra": {
         "branch-alias": {

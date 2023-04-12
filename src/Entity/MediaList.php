@@ -4,7 +4,6 @@ namespace HttpAccept\Entity;
 
 final class MediaList
 {
-
     /** @var array<string,MediaType> */
     private $media = [];
 
@@ -14,9 +13,9 @@ final class MediaList
     /** @var string[] */
     private $order;
 
-    public function addMedia(MediaType $media) : self
+    public function addMedia(MediaType $media): self
     {
-        $new = clone $this;
+        $new                        = clone $this;
         $new->media[$media->name()] = $media;
         $new->score[$media->name()] = $media->score();
 
@@ -25,12 +24,12 @@ final class MediaList
         return $new;
     }
 
-    public function count() : int
+    public function count(): int
     {
-        return count($this->media);
+        return \count($this->media);
     }
 
-    public function preferredMedia(int $pos) : ?MediaType
+    public function preferredMedia(int $pos): ?MediaType
     {
         $key = $this->order[$pos] ?? '';
         return $this->media[$key] ?? null;
@@ -51,15 +50,15 @@ final class MediaList
 
     private function sortByScore(): void
     {
-        if ($this->order !== null && count($this->order) === count($this->score)) {
+        if ($this->order !== null && \count($this->order) === \count($this->score)) {
             return;
         }
 
-        uasort($this->score, [$this, 'uasort']);
-        $this->order = array_keys($this->score);
+        \uasort($this->score, [$this, 'uasort']);
+        $this->order = \array_keys($this->score);
     }
 
-    private function uasort(float $valA, float $valB) : int
+    private function uasort(float $valA, float $valB): int
     {
         if ($valA === $valB) {
             return 0;

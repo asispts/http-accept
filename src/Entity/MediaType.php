@@ -6,7 +6,6 @@ use InvalidArgumentException;
 
 final class MediaType
 {
-
     private $name;
 
     private $type;
@@ -22,15 +21,15 @@ final class MediaType
 
     public function __construct(string $mime, ?float $quality, Parameters $parameters)
     {
-        list($type, $subtype) = explode('/', $mime);
+        list($type, $subtype) = \explode('/', $mime);
 
-        if (trim($type) === '' || trim($subtype) === '') {
+        if (\trim($type) === '' || \trim($subtype) === '') {
             throw new InvalidArgumentException('Invalid media-type format');
         }
 
-        $this->type = trim($type);
-        $this->subtype = trim($subtype);
-        $this->quality = $quality;
+        $this->type       = \trim($type);
+        $this->subtype    = \trim($subtype);
+        $this->quality    = $quality;
         $this->parameters = $parameters;
 
         $this->score = $this->calculateScore($this->type, $this->subtype, $this->quality(), $this->parameters);
@@ -41,22 +40,22 @@ final class MediaType
         }
     }
 
-    public function type() : string
+    public function type(): string
     {
         return $this->type;
     }
 
-    public function subtype() : string
+    public function subtype(): string
     {
         return $this->subtype;
     }
 
-    public function mimetype() : string
+    public function mimetype(): string
     {
         return $this->type . '/' . $this->subtype;
     }
 
-    public function quality() : float
+    public function quality(): float
     {
         if ($this->quality === null) {
             return 1.0;
@@ -70,17 +69,17 @@ final class MediaType
         return $this->parameters;
     }
 
-    public function score() : float
+    public function score(): float
     {
         return $this->score;
     }
 
-    public function name() : string
+    public function name(): string
     {
         return $this->name;
     }
 
-    private function calculateScore(string $type, string $subtype, float $quality, Parameters $param) : float
+    private function calculateScore(string $type, string $subtype, float $quality, Parameters $param): float
     {
         $score = 0.0;
         if (!empty($type) && $type !== '*') {
