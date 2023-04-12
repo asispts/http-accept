@@ -1,17 +1,12 @@
+includes:
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - phpstan-baseline.neon
+
 parameters:
     level: max
     paths:
         - src
-        - tests/Units
-
-    ignoreErrors:
-        -
-            message: '#[\w\\]+::(set[uU]p|test\w+)\(\) has no return typehint specified#'
-            path: tests/
-        -
-            message: '#Cannot call method [\w\(\)]+ on [\w\\]+\\MediaType\|null#'
-            path: tests/
-
+        - tests
 
     # Miscellaneous parameters
     inferPrivatePropertyTypeFromConstructor: true

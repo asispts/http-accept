@@ -40,6 +40,8 @@
     },
     "require-dev": {
         "pattisahusiwa/coding-standard": "^0.3.0",
+        "phpstan/phpstan": "^1.4",
+        "phpstan/phpstan-phpunit": "^1.0",
         "phpunit/phpunit": "^7.5|^8.5|^9.5"
     },
     "extra": {
