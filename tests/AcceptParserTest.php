@@ -1,13 +1,12 @@
 <?php declare(strict_types=1);
 
-use PHPUnit\Framework\TestCase;
 use HttpAccept\AcceptParser;
 use HttpAccept\Entity\MediaType;
 use HttpAccept\Entity\Parameters;
+use PHPUnit\Framework\TestCase;
 
 final class AcceptParserTest extends TestCase
 {
-
     /** @var AcceptParser */
     private $parser;
 
@@ -50,7 +49,7 @@ final class AcceptParserTest extends TestCase
 
     public function testInvalidParameterFormat()
     {
-        $list = $this->parser->parse('type/subtype;level');
+        $list  = $this->parser->parse('type/subtype;level');
         $media = $list->preferredMedia(0);
 
         $this->assertSame('type/subtype', $media->name());
@@ -63,7 +62,7 @@ final class AcceptParserTest extends TestCase
 
     public function testAsteriskOnly()
     {
-        $list = $this->parser->parse('*');
+        $list  = $this->parser->parse('*');
         $media = $list->preferredMedia(0);
 
         $this->assertSame('*/*', $media->name());
@@ -76,7 +75,7 @@ final class AcceptParserTest extends TestCase
 
     public function testParseEmptyQuality()
     {
-        $list = $this->parser->parse('type/subtype;q=');
+        $list  = $this->parser->parse('type/subtype;q=');
         $media = $list->preferredMedia(0);
 
         $this->assertSame('type/subtype', $media->name());
@@ -89,7 +88,7 @@ final class AcceptParserTest extends TestCase
 
     public function testParseFloatQuality()
     {
-        $list = $this->parser->parse('type/subtype;q=0.5');
+        $list  = $this->parser->parse('type/subtype;q=0.5');
         $media = $list->preferredMedia(0);
 
         $this->assertSame('type/subtype', $media->name());
@@ -102,7 +101,7 @@ final class AcceptParserTest extends TestCase
 
     public function testParseIntegerQuality()
     {
-        $list = $this->parser->parse('type/subtype;q=1');
+        $list  = $this->parser->parse('type/subtype;q=1');
         $media = $list->preferredMedia(0);
 
         $this->assertSame('type/subtype', $media->name());
@@ -115,7 +114,7 @@ final class AcceptParserTest extends TestCase
 
     public function testParseExtension()
     {
-        $list = $this->parser->parse(' type / subtype ; attr1 = 1 ; attr2 = 2');
+        $list  = $this->parser->parse(' type / subtype ; attr1 = 1 ; attr2 = 2');
         $media = $list->preferredMedia(0);
 
         $this->assertSame('type/subtype;attr1=1;attr2=2', $media->name());
@@ -179,17 +178,17 @@ final class AcceptParserTest extends TestCase
     {
         $list = $this->parser->parse('*/*;q=1, text/html;q=0.25 , text/*;q=0.75, text/css;q=0.5');
 
-        $expected[] = new MediaType('text/css', 0.5, new Parameters);
-        $expected[] = new MediaType('text/html', 0.25, new Parameters);
-        $expected[] = new MediaType('text/*', 0.75, new Parameters);
-        $expected[] = new MediaType('*/*', 1, new Parameters);
+        $expected[] = new MediaType('text/css', 0.5, new Parameters());
+        $expected[] = new MediaType('text/html', 0.25, new Parameters());
+        $expected[] = new MediaType('text/*', 0.75, new Parameters());
+        $expected[] = new MediaType('*/*', 1, new Parameters());
 
         $this->assertEquals($expected, $list->all());
     }
 
     public function testSameParameterName()
     {
-        $list = $this->parser->parse('type/subtype;level=1;level=2');
+        $list  = $this->parser->parse('type/subtype;level=1;level=2');
         $media = $list->preferredMedia(0);
 
         $this->assertSame(1, $media->parameters()->count());
@@ -207,7 +206,7 @@ final class AcceptParserTest extends TestCase
 
     public function testQuotedParameter()
     {
-        $list = $this->parser->parse('type/subtype;quoted="test value"');
+        $list  = $this->parser->parse('type/subtype;quoted="test value"');
         $media = $list->preferredMedia(0);
 
         $this->assertSame('test value', $media->parameters()->get('quoted'));
@@ -215,7 +214,7 @@ final class AcceptParserTest extends TestCase
 
     public function testGetAllParameters()
     {
-        $list = $this->parser->parse('type/subtype;attr1=1;attr2=2');
+        $list  = $this->parser->parse('type/subtype;attr1=1;attr2=2');
         $media = $list->preferredMedia(0);
 
         $expected = ['attr1' => '1', 'attr2' => '2'];
