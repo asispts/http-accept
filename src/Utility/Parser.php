@@ -8,6 +8,16 @@ use InvalidArgumentException;
 final class Parser
 {
     /**
+     * @var ValidatorInterface
+     */
+    private $nameValidator = null;
+
+    public function setNameValidator(ValidatorInterface $validator): void
+    {
+        $this->nameValidator = $validator;
+    }
+
+    /**
      * @return array<MediaType>
      */
     public function parse(string $source): array
@@ -21,6 +31,10 @@ final class Parser
 
             if (empty($name)) {
                 throw new InvalidArgumentException('Media name is empty');
+            }
+
+            if ($this->nameValidator !== null) {
+                $name = $this->nameValidator->validate($name);
             }
 
             $parameters    = $this->parseParameters($tokens);
