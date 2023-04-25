@@ -54,7 +54,7 @@ final class Parser
             }
 
             $parameters = $this->parseParameters($tokens);
-            $quality    = $parameters['q'] ? (float) $parameters['q'] : null;
+            $quality    = isset($parameters['q']) ? (float) $parameters['q'] : null;
             $score      = $this->getScore($name, $quality, \count($parameters));
             $mediaType  = new MediaType($name, $parameters, $score);
 
