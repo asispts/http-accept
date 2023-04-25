@@ -12,6 +12,22 @@ final class Parser
      */
     private $nameValidator = null;
 
+    /**
+     * @var MimeScore|null
+     */
+    private $score;
+
+    /**
+     * @var ScoreSorter|null
+     */
+    private $sorter;
+
+    public function __construct(?MimeScore $score = null, ?ScoreSorter $sorter = null)
+    {
+        $this->score  = $score;
+        $this->sorter = $sorter;
+    }
+
     public function setNameValidator(ValidatorInterface $validator): void
     {
         $this->nameValidator = $validator;
@@ -37,8 +53,16 @@ final class Parser
                 $name = $this->nameValidator->validate($name);
             }
 
-            $parameters    = $this->parseParameters($tokens);
-            $result[$name] = new MediaType($name, $parameters);
+            $parameters = $this->parseParameters($tokens);
+            $quality    = $parameters['q'] ? (float) $parameters['q'] : null;
+            $score      = $this->getScore($name, $quality, \count($parameters));
+            $mediaType  = new MediaType($name, $parameters, $score);
+
+            $result[$mediaType->toString()] = $mediaType;
+        }
+
+        if ($this->sorter !== null) {
+            $result = $this->sorter->sort($result);
         }
 
         return \array_values($result);
@@ -86,5 +110,14 @@ final class Parser
         }
 
         return $value;
+    }
+
+    private function getScore(string $name, ?float $quality, int $totalParameter): float
+    {
+        if ($this->score === null) {
+            return 0.0;
+        }
+
+        return $this->score->calculate($name, $quality, $totalParameter);
     }
 }

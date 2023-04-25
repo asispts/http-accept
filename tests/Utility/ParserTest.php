@@ -51,26 +51,26 @@ final class ParserTest extends TestCase
 
     public static function validDataProvider(): Generator
     {
-        yield['type/subtype', [new MediaType('type/subtype', [])]];
-        yield['type/subtype;  ', [new MediaType('type/subtype', [])]];
-        yield['type/subtype, type2', [new MediaType('type/subtype', []), new MediaType('type2', [])]];
+        yield['type/subtype', [new MediaType('type/subtype', [], 0)]];
+        yield['type/subtype;  ', [new MediaType('type/subtype', [], 0)]];
+        yield['type/subtype, type2', [new MediaType('type/subtype', [], 0), new MediaType('type2', [], 0)]];
 
         // Case-insensitive media name
-        yield['en-US, en-us ', [new MediaType('en-us', [])]];
+        yield['en-US, en-us ', [new MediaType('en-us', [], 0)]];
 
         // Empty parameter value
-        yield['type   ;   name  =   ', [new MediaType('type', ['name' => ''])]];
+        yield['type   ;   name  =   ', [new MediaType('type', ['name' => ''], 0)]];
 
         // Case-insensitive parameter name
-        yield['type; name=value1; Name=Value2', [new MediaType('type', ['name' => 'Value2'])]];
+        yield['type; name=value1; Name=Value2', [new MediaType('type', ['name' => 'Value2'], 0)]];
 
         // Quoted parameter value
-        yield['type; name=  "1"  ', [new MediaType('type', ['name' => '1'])]];
-        yield['type; name=  "test "Quoted" value"  ', [new MediaType('type', ['name' => 'test "Quoted" value'])]];
-        yield['type; name=  ""Quoted" value"  ', [new MediaType('type', ['name' => '"Quoted" value'])]];
-        yield['type; name=  "Quoted "value""  ', [new MediaType('type', ['name' => 'Quoted "value"'])]];
-        yield['type; name=  "Quoted value  ', [new MediaType('type', ['name' => '"Quoted value'])]];
-        yield['type; name=  Quoted value"  ', [new MediaType('type', ['name' => 'Quoted value"'])]];
-        yield['type; name=  ""  ', [new MediaType('type', ['name' => ''])]];
+        yield['type; name=  "1"  ', [new MediaType('type', ['name' => '1'], 0)]];
+        yield['type; name=  "test "Quoted" value"  ', [new MediaType('type', ['name' => 'test "Quoted" value'], 0)]];
+        yield['type; name=  ""Quoted" value"  ', [new MediaType('type', ['name' => '"Quoted" value'], 0)]];
+        yield['type; name=  "Quoted "value""  ', [new MediaType('type', ['name' => 'Quoted "value"'], 0)]];
+        yield['type; name=  "Quoted value  ', [new MediaType('type', ['name' => '"Quoted value'], 0)]];
+        yield['type; name=  Quoted value"  ', [new MediaType('type', ['name' => 'Quoted value"'], 0)]];
+        yield['type; name=  ""  ', [new MediaType('type', ['name' => ''], 0)]];
     }
 }

@@ -50,10 +50,10 @@ final class ContentTypeParserTest extends TestCase
 
     public static function validDataProvider(): Generator
     {
-        yield['*', new MediaType('*/*', [])];
+        yield['*', new MediaType('*/*', [], 0)];
         yield[
           'application/xml; version=1.0; encoding=utf-8',
-          new MediaType('application/xml', ['version' => '1.0', 'encoding' => 'utf-8']),
+          new MediaType('application/xml', ['version' => '1.0', 'encoding' => 'utf-8'], 0),
         ];
     }
 }

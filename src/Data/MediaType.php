@@ -15,12 +15,18 @@ final class MediaType
     private $parameters;
 
     /**
+     * @var float
+     */
+    private $score;
+
+    /**
      * @param array<string,string> $parameters
      */
-    public function __construct(string $name, array $parameters)
+    public function __construct(string $name, array $parameters, float $score)
     {
         $this->name       = $name;
         $this->parameters = $parameters;
+        $this->score      = $score;
     }
 
     public function name(): string
@@ -44,5 +50,19 @@ final class MediaType
     public function getParameter(string $key): string
     {
         return $this->parameters[$key];
+    }
+
+    public function score(): float
+    {
+        return $this->score;
+    }
+
+    public function toString(): string
+    {
+        $value = $this->name;
+        if (\count($this->parameters) > 0) {
+            $value .= ';' . \implode(';', $this->parameters);
+        }
+        return $value;
     }
 }
