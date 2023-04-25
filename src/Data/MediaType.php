@@ -61,7 +61,11 @@ final class MediaType
     {
         $value = $this->name;
         if (\count($this->parameters) > 0) {
-            $value .= ';' . \implode(';', $this->parameters);
+            $params = [];
+            foreach ($this->parameters as $key => $paramValue) {
+                $params[] = $key . '=' . $paramValue;
+            }
+            $value .= ';' . \implode(';', $params);
         }
         return $value;
     }

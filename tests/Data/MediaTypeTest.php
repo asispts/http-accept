@@ -2,6 +2,7 @@
 
 namespace HttpAccept\Tests\Data;
 
+use Generator;
 use HttpAccept\Utility\Parser;
 use PHPUnit\Framework\TestCase;
 
@@ -22,5 +23,19 @@ final class MediaTypeTest extends TestCase
         $types = (new Parser())->parse('*;q=1.0;version=1');
 
         $this->assertTrue($types[0]->hasParamater('Q'));
+    }
+
+    /**
+     * @dataProvider toStringDataProvider
+     */
+    public function test_to_string(string $source, string $expected): void
+    {
+        $types = (new Parser())->parse($source);
+        $this->assertSame($expected, $types[0]->toString());
+    }
+
+    public function toStringDataProvider(): Generator
+    {
+        yield['*;version=1.0', '*;version=1.0'];
     }
 }
