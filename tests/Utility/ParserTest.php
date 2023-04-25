@@ -21,8 +21,7 @@ final class ParserTest extends TestCase
         $this->expectException($exception);
         $this->expectExceptionMessage($message);
 
-        $parser = new Parser();
-        $parser->parse($source);
+        (new Parser())->parse($source);
     }
 
     public static function invalidDataProvider(): Generator
@@ -32,7 +31,7 @@ final class ParserTest extends TestCase
         yield['type/subtype;attr', InvalidArgumentException::class, 'Invalid parameter value'];
         yield['type/subtype;  =value', InvalidArgumentException::class, 'Invalid parameter name'];
 
-        // Don't know if this a valid format
+        // Don't know if this is a valid format
         yield['type/subtype;attr=value1=value2', InvalidArgumentException::class, 'Invalid parameter format'];
     }
 
@@ -43,9 +42,7 @@ final class ParserTest extends TestCase
      */
     public function test_parse_valid_data(string $source, array $expected): void
     {
-        $parser = new Parser();
-        $actual = $parser->parse($source);
-
+        $actual = (new Parser())->parse($source);
         $this->assertEquals($expected, $actual);
     }
 
@@ -72,5 +69,21 @@ final class ParserTest extends TestCase
         yield['type; name=  "Quoted value  ', [new MediaType('type', ['name' => '"Quoted value'], 0)]];
         yield['type; name=  Quoted value"  ', [new MediaType('type', ['name' => 'Quoted value"'], 0)]];
         yield['type; name=  ""  ', [new MediaType('type', ['name' => ''], 0)]];
+    }
+
+    /**
+     * @dataProvider qvalueDataProvide
+     */
+    public function test_filter_qvalue(string $source, string $expected): void
+    {
+        $objs = (new Parser())->parse($source);
+        $this->assertSame($expected, $objs[0]->toString());
+    }
+
+    public function qvalueDataProvide(): Generator
+    {
+        yield['*;q=1.0', '*'];
+        yield['*;q=1', '*'];
+        yield['*;q=0.8', '*;q=0.8'];
     }
 }

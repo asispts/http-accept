@@ -97,7 +97,12 @@ final class Parser
                 throw new InvalidArgumentException('Invalid parameter value');
             }
 
-            $result[\strtolower(\trim($name))] = $this->normalizeQuotedString(\trim($value));
+            $name  = \strtolower(\trim($name));
+            $value = $this->normalizeQuotedString(\trim($value));
+            if ($name === 'q' && \floatval($value) === 1.0) {
+                continue;
+            }
+            $result[$name] = $value;
         }
 
         return $result;

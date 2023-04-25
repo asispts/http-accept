@@ -81,10 +81,10 @@ final class AcceptParserTest extends TestCase
         ];
 
         yield[
-          'type/subtype;q=1.0, text/css',
+          'type/subtype;q=0.9, text/css;q=0.8',
           [
-            new MediaType('type/subtype', ['q' => '1.0'], 1111.0),
-            new MediaType('text/css', [], 1101.0),
+            new MediaType('type/subtype', ['q' => '0.9'], 1110.9),
+            new MediaType('text/css', ['q' => '0.8'], 1110.8),
           ],
         ];
 
