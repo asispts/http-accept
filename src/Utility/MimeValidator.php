@@ -4,7 +4,7 @@ namespace HttpAccept\Utility;
 
 use InvalidArgumentException;
 
-final class MimeValidator implements ValidatorInterface
+final class MimeValidator
 {
     public function validate(string $name): string
     {

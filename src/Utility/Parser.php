@@ -7,24 +7,14 @@ use InvalidArgumentException;
 
 final class Parser
 {
-    /**
-     * @var ValidatorInterface
-     */
-    private $nameValidator = null;
+    private $mimeValidator;
 
-    /**
-     * @var QValueSorter|null
-     */
     private $qvalue;
 
-    public function __construct(?QValueSorter $qvalue = null)
+    public function __construct(?MimeValidator $mimeValidator = null, ?QValueSorter $qvalue = null)
     {
-        $this->qvalue = $qvalue;
-    }
-
-    public function setNameValidator(ValidatorInterface $validator): void
-    {
-        $this->nameValidator = $validator;
+        $this->mimeValidator = $mimeValidator;
+        $this->qvalue        = $qvalue;
     }
 
     /**
@@ -43,8 +33,8 @@ final class Parser
                 throw new InvalidArgumentException('Media name is empty');
             }
 
-            if ($this->nameValidator !== null) {
-                $name = $this->nameValidator->validate($name);
+            if ($this->mimeValidator !== null) {
+                $name = $this->mimeValidator->validate($name);
             }
 
             $parameters = $this->parseParameters($tokens);

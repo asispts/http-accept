@@ -13,8 +13,7 @@ final class ContentTypeParser
 
     public function __construct()
     {
-        $this->parser = new Parser();
-        $this->parser->setNameValidator(new MimeValidator());
+        $this->parser = new Parser(new MimeValidator());
     }
 
     public function parse(string $source): MediaType
