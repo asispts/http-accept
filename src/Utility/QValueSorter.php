@@ -4,8 +4,27 @@ namespace HttpAccept\Utility;
 
 use HttpAccept\Data\MediaType;
 
-final class ScoreSorter
+final class QValueSorter
 {
+    public function calculate(string $source, ?float $quality): float
+    {
+        $score   = 1.0;
+        $quality = $quality ?? 1.0;
+        $parts   = \explode('/', $source);
+        $type    = $parts[0];
+        $subtype = $parts[1] ?? null;
+
+        if (\trim($type) !== '*') {
+            $score = 1000.0;
+        }
+        if ($subtype !== null && \trim($subtype) !== '*') {
+            $score += 100.0;
+        }
+
+        $score = $score * $quality;
+        return $score;
+    }
+
     /**
      * @param MediaType[] $values
      *

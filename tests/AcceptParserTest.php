@@ -21,8 +21,7 @@ final class AcceptParserTest extends TestCase
         $this->expectException($exception);
         $this->expectExceptionMessage($message);
 
-        $parser = new AcceptParser();
-        $parser->parse($source);
+        (new AcceptParser())->parse($source);
     }
 
     public static function invalidDataProvider(): Generator
@@ -36,95 +35,28 @@ final class AcceptParserTest extends TestCase
     }
 
     /**
-     * @dataProvider scoreDataProvider
+     * @dataProvider validDataProvider
      *
      * @param MediaType[] $expected
      */
-    public function test_calculate_score(string $source, array $expected): void
+    public function test_valid_data(string $source, array $expected): void
     {
-        $parser = new AcceptParser();
-        $objs   = $parser->parse($source);
-
+        $objs = (new AcceptParser())->parse($source);
         $this->assertEquals($expected, $objs);
     }
 
-    public static function scoreDataProvider(): Generator
+    public function validDataProvider(): Generator
     {
-        yield['*', [new MediaType('*/*', [], 1.0)]];
-        yield['*/*;q=0.8', [new MediaType('*/*', ['q' => '0.8'], 10.8)]];
-        yield['type/*', [new MediaType('type/*', [], 1001.0)]];
-        yield['type/subtype', [new MediaType('type/subtype', [], 1101.0)]];
-        yield['type/subtype;version=1.0', [new MediaType('type/subtype', ['version' => '1.0'], 1111.0)]];
-    }
-
-    /**
-     * @dataProvider sortDataProvider
-     *
-     * @param MediaType[] $expected
-     */
-    public function test_sort_result(string $source, array $expected): void
-    {
-        $parser = new AcceptParser();
-        $objs   = $parser->parse($source);
-
-        $this->assertEquals($expected, $objs);
-    }
-
-    public function sortDataProvider(): Generator
-    {
-        yield[
-          '*;q=0.8,type/*',
-          [
-            new MediaType('type/*', [], 1001.0),
-            new MediaType('*/*', ['q' => '0.8'], 10.8),
-          ],
-        ];
+        yield['*;q=1.0, */*', [new MediaType('*/*', [], 1.0)]];
 
         yield[
-          'type/subtype;q=0.9, text/css;q=0.8',
+          'text/html;q=0,*/*,type/*,type/subtype,text/css;q=0.8',
           [
-            new MediaType('type/subtype', ['q' => '0.9'], 1110.9),
-            new MediaType('text/css', ['q' => '0.8'], 1110.8),
-          ],
-        ];
-
-        // Same score
-        yield[
-          'type/subtype, text/css',
-          [
-            new MediaType('type/subtype', [], 1101.0),
-            new MediaType('text/css', [], 1101.0),
-          ],
-        ];
-    }
-
-    /**
-     * @dataProvider duplicateDataProvider
-     *
-     * @param MediaType[] $expected
-     */
-    public function test_duplicate_items(string $source, array $expected): void
-    {
-        $parser = new AcceptParser();
-        $objs   = $parser->parse($source);
-
-        $this->assertEquals($expected, $objs);
-    }
-
-    public function duplicateDataProvider(): Generator
-    {
-        yield[
-          '*,*/*',
-          [
+            new MediaType('type/subtype', [], 1100.0),
+            new MediaType('type/*', [], 1000.0),
+            new MediaType('text/css', ['q' => '0.8'], 880.0),
             new MediaType('*/*', [], 1.0),
-          ],
-        ];
-
-        yield[
-          '*;q=0.5, *',
-          [
-            new MediaType('*/*', ['q' => '0.5'], 10.5),
-            new MediaType('*/*', [], 1.0),
+            new MediaType('text/html', ['q' => '0'], 0.0),
           ],
         ];
     }

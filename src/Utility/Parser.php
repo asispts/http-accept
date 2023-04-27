@@ -13,19 +13,13 @@ final class Parser
     private $nameValidator = null;
 
     /**
-     * @var MimeScore|null
+     * @var QValueSorter|null
      */
-    private $score;
+    private $qvalue;
 
-    /**
-     * @var ScoreSorter|null
-     */
-    private $sorter;
-
-    public function __construct(?MimeScore $score = null, ?ScoreSorter $sorter = null)
+    public function __construct(?QValueSorter $qvalue = null)
     {
-        $this->score  = $score;
-        $this->sorter = $sorter;
+        $this->qvalue = $qvalue;
     }
 
     public function setNameValidator(ValidatorInterface $validator): void
@@ -55,16 +49,15 @@ final class Parser
 
             $parameters = $this->parseParameters($tokens);
             $quality    = isset($parameters['q']) ? (float) $parameters['q'] : null;
-            $score      = $this->getScore($name, $quality, \count($parameters));
+            $score      = $this->getScore($name, $quality);
             $mediaType  = new MediaType($name, $parameters, $score);
 
             $result[$mediaType->toString()] = $mediaType;
         }
 
-        if ($this->sorter !== null) {
-            $result = $this->sorter->sort($result);
+        if ($this->qvalue !== null) {
+            $result = $this->qvalue->sort($result);
         }
-
         return \array_values($result);
     }
 
@@ -117,12 +110,12 @@ final class Parser
         return $value;
     }
 
-    private function getScore(string $name, ?float $quality, int $totalParameter): float
+    private function getScore(string $name, ?float $quality): float
     {
-        if ($this->score === null) {
+        if ($this->qvalue === null) {
             return 0.0;
         }
 
-        return $this->score->calculate($name, $quality, $totalParameter);
+        return $this->qvalue->calculate($name, $quality);
     }
 }

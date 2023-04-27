@@ -3,10 +3,9 @@
 namespace HttpAccept;
 
 use HttpAccept\Data\MediaType;
-use HttpAccept\Utility\MimeScore;
 use HttpAccept\Utility\MimeValidator;
 use HttpAccept\Utility\Parser;
-use HttpAccept\Utility\ScoreSorter;
+use HttpAccept\Utility\QValueSorter;
 
 final class AcceptParser
 {
@@ -14,7 +13,7 @@ final class AcceptParser
 
     public function __construct()
     {
-        $this->parser = new Parser(new MimeScore(), new ScoreSorter());
+        $this->parser = new Parser(new QValueSorter());
         $this->parser->setNameValidator(new MimeValidator());
     }
 
