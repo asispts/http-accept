@@ -3,13 +3,13 @@
 namespace HttpAccept\Tests;
 
 use Generator;
-use HttpAccept\AcceptParser;
+use HttpAccept\ContentTypeParser;
 use HttpAccept\Data\MediaType;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 
-final class AcceptParserTest extends TestCase
+final class ContentTypeParserTest extends TestCase
 {
     /**
      * @dataProvider invalidDataProvider
@@ -21,7 +21,8 @@ final class AcceptParserTest extends TestCase
         $this->expectException($exception);
         $this->expectExceptionMessage($message);
 
-        (new AcceptParser())->parse($source);
+        $parser = new ContentTypeParser();
+        $parser->parse($source);
     }
 
     public static function invalidDataProvider(): Generator
@@ -32,32 +33,27 @@ final class AcceptParserTest extends TestCase
         yield['type/   ', InvalidArgumentException::class, 'Invalid media-type format'];
         yield[' /subtype', InvalidArgumentException::class, 'Invalid media-type format'];
         yield['type/subtype/error', InvalidArgumentException::class, 'Invalid media-type format'];
+
+        yield['type/subtype, type/*', InvalidArgumentException::class, 'Invalid Content-Type format'];
     }
 
     /**
      * @dataProvider validDataProvider
-     *
-     * @param MediaType[] $expected
      */
-    public function test_valid_data(string $source, array $expected): void
+    public function test_parse_valid_data(string $source, MediaType $expected): void
     {
-        $objs = (new AcceptParser())->parse($source);
-        $this->assertEquals($expected, $objs);
+        $parser = new ContentTypeParser();
+        $actual = $parser->parse($source);
+
+        $this->assertEquals($expected, $actual);
     }
 
-    public function validDataProvider(): Generator
+    public static function validDataProvider(): Generator
     {
-        yield['*;q=1.0, */*', [new MediaType('*/*', [], 1.0)]];
-
+        yield['*', new MediaType('*/*', [], 0)];
         yield[
-          'text/html;q=0,*/*,type/*,type/subtype,text/css;q=0.8',
-          [
-            new MediaType('type/subtype', [], 1100.0),
-            new MediaType('type/*', [], 1000.0),
-            new MediaType('text/css', ['q' => '0.8'], 880.0),
-            new MediaType('*/*', [], 1.0),
-            new MediaType('text/html', ['q' => '0'], 0.0),
-          ],
+          'application/xml; version=1.0; encoding=utf-8',
+          new MediaType('application/xml', ['version' => '1.0', 'encoding' => 'utf-8'], 0),
         ];
     }
 }

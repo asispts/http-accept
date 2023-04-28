@@ -3,17 +3,16 @@
 namespace HttpAccept;
 
 use HttpAccept\Data\MediaType;
-use HttpAccept\Utility\MimeValidator;
 use HttpAccept\Utility\Parser;
 use HttpAccept\Utility\QValueSorter;
 
-final class AcceptParser
+final class AcceptEncodingParser
 {
     private $parser;
 
     public function __construct()
     {
-        $this->parser = new Parser(new MimeValidator(), new QValueSorter());
+        $this->parser = new Parser(null, new QValueSorter());
     }
 
     /**
