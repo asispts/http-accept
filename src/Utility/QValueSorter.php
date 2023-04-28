@@ -3,21 +3,23 @@
 namespace HttpAccept\Utility;
 
 use HttpAccept\Data\MediaType;
+use InvalidArgumentException;
 
 final class QValueSorter
 {
     public function calculate(string $source, ?float $quality): float
     {
+        [$type, $subtype, $invalidPart] = \array_pad(\array_map('trim', \explode('/', $source)), 3, null);
+        if ($type === '' || $subtype === '' || $invalidPart !== null) {
+            throw new InvalidArgumentException('Invalid qvalue name');
+        }
+
         $score   = 1.0;
         $quality = $quality ?? 1.0;
-        $parts   = \explode('/', $source);
-        $type    = $parts[0];
-        $subtype = $parts[1] ?? null;
-
-        if (\trim($type) !== '*') {
+        if ($type !== '*') {
             $score = 1000.0;
         }
-        if ($subtype !== null && \trim($subtype) !== '*') {
+        if ($subtype !== null && $subtype !== '*') {
             $score += 100.0;
         }
 

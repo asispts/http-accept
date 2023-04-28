@@ -5,10 +5,29 @@ namespace HttpAccept\Tests\Utility;
 use Generator;
 use HttpAccept\Data\MediaType;
 use HttpAccept\Utility\QValueSorter;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 final class QValueSorterTest extends TestCase
 {
+    /**
+     * @dataProvider invalidDataProvider
+     */
+    public function test_invalid_data(string $source): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid qvalue name');
+
+        (new QValueSorter())->calculate($source, null);
+    }
+
+    public function invalidDataProvider(): Generator
+    {
+        yield['  '];
+        yield['type/  '];
+        yield['type/subtype/error'];
+    }
+
     /**
      * @dataProvider scoreDataProvider
      */
@@ -20,7 +39,7 @@ final class QValueSorterTest extends TestCase
 
     public function scoreDataProvider(): Generator
     {
-        yield['*', null, 1.0];
+        yield['  *  ', null, 1.0];
         yield['*/*', null, 1.0];
         yield['en-US', null, 1000.0];
         yield['en-US', 0.8, 800.0];
