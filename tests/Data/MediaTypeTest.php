@@ -34,7 +34,7 @@ final class MediaTypeTest extends TestCase
         $this->assertSame($expected, $types[0]->toString());
     }
 
-    public function toStringDataProvider(): Generator
+    public static function toStringDataProvider(): Generator
     {
         yield['*;version=1.0', '*;version=1.0'];
     }

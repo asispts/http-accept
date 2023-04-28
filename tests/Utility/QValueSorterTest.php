@@ -21,7 +21,7 @@ final class QValueSorterTest extends TestCase
         (new QValueSorter())->calculate($source, null);
     }
 
-    public function invalidDataProvider(): Generator
+    public static function invalidDataProvider(): Generator
     {
         yield['  '];
         yield['type/  '];
@@ -37,7 +37,7 @@ final class QValueSorterTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function scoreDataProvider(): Generator
+    public static function scoreDataProvider(): Generator
     {
         yield['  *  ', null, 1.0];
         yield['*/*', null, 1.0];
@@ -63,7 +63,7 @@ final class QValueSorterTest extends TestCase
         }
     }
 
-    public function sortDataProvider(): Generator
+    public static function sortDataProvider(): Generator
     {
         yield [
           [

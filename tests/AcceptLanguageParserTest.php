@@ -40,7 +40,7 @@ final class AcceptLanguageParserTest extends TestCase
         $this->assertEquals($expected, $objs);
     }
 
-    public function validDataProvider(): Generator
+    public static function validDataProvider(): Generator
     {
         yield[
           'es;q=0.3,en;q=0.5,en-US',

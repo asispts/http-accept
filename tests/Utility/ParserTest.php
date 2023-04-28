@@ -80,7 +80,7 @@ final class ParserTest extends TestCase
         $this->assertSame($expected, $objs[0]->toString());
     }
 
-    public function qvalueDataProvide(): Generator
+    public static function qvalueDataProvide(): Generator
     {
         yield['*;q=1.0', '*'];
         yield['*;q=1', '*'];
