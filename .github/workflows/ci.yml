@@ -40,6 +40,9 @@ jobs:
             - name: coding standard
               run: vendor/bin/phpcs
 
+            - name: Show PHPStan version
+              run: vendor/bin/phpstan --version
+
             - name: phpstan
               run: vendor/bin/phpstan analyse
 
