@@ -48,7 +48,7 @@ final class ParserTest extends TestCase
 
     public static function validDataProvider(): Generator
     {
-        yield['type/subtype', [new MediaType('type/subtype', [], 0)]];
+        yield['  type/subtype   ', [new MediaType('type/subtype', [], 0)]];
         yield['type/subtype;  ', [new MediaType('type/subtype', [], 0)]];
         yield['type/subtype, type2', [new MediaType('type/subtype', [], 0), new MediaType('type2', [], 0)]];
 
@@ -62,7 +62,7 @@ final class ParserTest extends TestCase
         yield['type; name=value1; Name=Value2', [new MediaType('type', ['name' => 'Value2'], 0)]];
 
         // Quoted parameter value
-        yield['type; name=  "1"  ', [new MediaType('type', ['name' => '1'], 0)]];
+        yield['type   ; name  =  "1"  ', [new MediaType('type', ['name' => '1'], 0)]];
         yield['type; name=  "test "Quoted" value"  ', [new MediaType('type', ['name' => 'test "Quoted" value'], 0)]];
         yield['type; name=  ""Quoted" value"  ', [new MediaType('type', ['name' => '"Quoted" value'], 0)]];
         yield['type; name=  "Quoted "value""  ', [new MediaType('type', ['name' => 'Quoted "value"'], 0)]];

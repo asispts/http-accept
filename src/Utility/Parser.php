@@ -26,9 +26,9 @@ final class Parser
         $parts  = \explode(',', $source);
 
         foreach ($parts as $item) {
-            $tokens = \explode(';', $item);
-            $name   = \strtolower(\trim(\array_shift($tokens)));
+            $tokens = \array_map('trim', \explode(';', $item));
 
+            $name = \strtolower(\array_shift($tokens));
             if (empty($name)) {
                 throw new InvalidArgumentException('Media name is empty');
             }
@@ -60,28 +60,23 @@ final class Parser
     {
         $result = [];
         foreach ($input as $item) {
-            if (\trim($item) === '') {
+            if ($item === '') {
                 continue;
             }
 
-            $parts = \explode('=', $item);
-            $name  = $parts[0] ?? null;
-            $value = $parts[1] ?? null;
-
-            if (\count($parts) > 2) {
+            [$name, $value, $invalidPart] = \array_pad(\array_map('trim', \explode('=', $item)), 3, null);
+            if ($invalidPart !== null) {
                 throw new InvalidArgumentException('Invalid parameter format');
             }
-
-            if ($name === null || \trim($name) === '') {
+            if ($name === '') {
                 throw new InvalidArgumentException('Invalid parameter name');
             }
-
             if ($value === null) {
                 throw new InvalidArgumentException('Invalid parameter value');
             }
 
-            $name  = \strtolower(\trim($name));
-            $value = $this->normalizeQuotedString(\trim($value));
+            $name  = \strtolower($name);
+            $value = $this->normalizeQuotedString($value);
             if ($name === 'q' && \floatval($value) === 1.0) {
                 continue;
             }
