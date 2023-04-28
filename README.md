@@ -1,42 +1,40 @@
-# HTTP Accept
-PHP Parser to deal with HTTP `Accept`, `Accept-Language`, `Accept-Encoding`, and `Accept-Charset` headers
+[![Build](https://github.com/asispts/http-accept/actions/workflows/ci.yml/badge.svg)](https://github.com/asispts/http-accept/actions/workflows/ci.yml)
+[![License](https://img.shields.io/github/license/asispts/http-accept)](./LICENSE)
 
-[![Build](https://github.com/pattisahusiwa/http-accept/workflows/Build/badge.svg?branch=master)](https://github.com/pattisahusiwa/http-accept/actions)
-[![License](https://img.shields.io/github/license/pattisahusiwa/http-accept)](https://github.com/pattisahusiwa/http-accept/blob/master/LICENSE)
+# `http-accept` parser
+`http-accept` is a PHP parser designed to handle HTTP headers related to content negotiation. These headers include `Accept`, `Accept-Language`, `Accept-Encoding`, and `Content-Type`. The library provides parser classes for each of these headers, making it easy to extract the relevant information from incoming HTTP requests.
 
 ## Installation
-Use [composer](https://getcomposer.org/) to install the library.
+You can install this library using [composer](https://getcomposer.org/).
 ```bash
-composer require hnet/http-accept
+composer require asispts/http-accept
 ```
 
 ## Usage
+To parse the different headers, use the corresponding parser class.
 
-## Changelog
-See [CHANGELOG.md](https://github.com/pattisahusiwa/http-accept/blob/master/CHANGELOG.md)
+### Parse `Content-Type`
+```php
+$contentType = (new ContentTypeParser())->parse($source);
+```
 
+### Parse HTTP `Accept`
+```php
+$types = (new AcceptParser())->parse($source);
+```
+
+### Parse `Accept-Language`
+```php
+$languages = (new AcceptLanguageParser())->parse($source);
+```
+
+### Parse `Accept-Encoding`
+```php
+$encodings = (new AcceptEncodingParser())->parse($source);
+```
 
 ## Contributing
-All form of contributions are welcome. You can [report issues](https://github.com/pattisahusiwa/http-accept/issues), fork the repo and [submit pull requests](https://github.com/pattisahusiwa/http-accept/pulls).
-
-For major changes, please open an issue first to discuss what you would like to change.
-
+All forms of contributions are welcome, including bug reports, feature requests, and pull requests. If you plan to make major changes, please open an issue first to discuss what you would like to change.
 
 ## License
-Released under [Apache-2.0 License](https://opensource.org/licenses/Apache-2.0). See [LICENSE](https://github.com/pattisahusiwa/http-accept/blob/master/LICENSE) file for more details.
-
-````txt
-Copyright 2020 Asis Pattisahusiwa
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-````
+Released under [Apache-2.0 License](https://opensource.org/licenses/Apache-2.0). See [LICENSE](./LICENSE) file for more details.

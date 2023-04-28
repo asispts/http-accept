@@ -1,13 +1,13 @@
 {
-    "name": "hnet/http-accept",
-    "description": "PHP Parser to deal with HTTP Accept, Accept-Language, Accept-Encoding, and Accept-Charset headers",
+    "name": "asispts/http-accept",
+    "description": "PHP Parser to deal with HTTP Accept, Accept-Language, Accept-Encoding, and Content-Type headers",
     "keywords": [
-        "http",
-        "http accept",
-        "Accept",
-        "Accept-Language",
-        "Accept-Encoding",
-        "Accept-Charset"
+        "http-headers",
+        "http-header-parser",
+        "accept",
+        "accept-language",
+        "accept-encoding",
+        "content-type"
     ],
     "type": "library",
     "license": "Apache-2.0",
@@ -35,18 +35,18 @@
             "HttpAccept\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "HttpAccept\\Tests\\": "tests"
+        }
+    },
     "require": {
-        "php": ">=7.2"
+        "php": "^7.2|^8.0"
     },
     "require-dev": {
         "asispts/ptscs": "^1.0",
         "phpstan/phpstan": "^1.4",
         "phpstan/phpstan-phpunit": "^1.0",
         "phpunit/phpunit": "^8.5|^9.5"
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.2-dev"
-        }
     }
 }
