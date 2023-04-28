@@ -22,6 +22,6 @@ final class MimeValidator
             throw new InvalidArgumentException('Invalid media-type format');
         }
 
-        return $name;
+        return $type . '/' . $subtype;
     }
 }

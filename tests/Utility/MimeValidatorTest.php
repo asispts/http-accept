@@ -30,17 +30,17 @@ final class MimeValidatorTest extends TestCase
     }
 
     /**
-     * @dataProvider asteriskDataProvider
+     * @dataProvider nameDataProvider
      */
-    public function test_validate_asterisk(string $source): void
+    public function test_validate_name(string $source, string $expected): void
     {
         $name = (new MimeValidator())->validate($source);
-        $this->assertSame('*/*', $name);
+        $this->assertSame($expected, $name);
     }
 
-    public function asteriskDataProvider(): Generator
+    public function nameDataProvider(): Generator
     {
-        yield['*'];
-        yield['  *  '];
+        yield['  *  ', '*/*'];
+        yield['   type   /  subtype', 'type/subtype'];
     }
 }
