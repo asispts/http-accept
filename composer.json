@@ -47,6 +47,6 @@
         "asispts/ptscs": "^1.0",
         "phpstan/phpstan": "^1.4",
         "phpstan/phpstan-phpunit": "^1.0",
-        "phpunit/phpunit": "^8.5|^9.5"
+        "phpunit/phpunit": "^8.5|^9.5|^10.0"
     }
 }

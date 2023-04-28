@@ -45,7 +45,7 @@ final class AcceptParserTest extends TestCase
         $this->assertEquals($expected, $objs);
     }
 
-    public function validDataProvider(): Generator
+    public static function validDataProvider(): Generator
     {
         yield['*;q=1.0, */*', [new MediaType('*/*', [], 1.0)]];
 

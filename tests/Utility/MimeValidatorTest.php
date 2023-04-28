@@ -20,7 +20,7 @@ final class MimeValidatorTest extends TestCase
         (new MimeValidator())->validate($source);
     }
 
-    public function invalidDataProvider(): Generator
+    public static function invalidDataProvider(): Generator
     {
         yield['   '];
         yield['   /subtype'];
@@ -38,7 +38,7 @@ final class MimeValidatorTest extends TestCase
         $this->assertSame($expected, $name);
     }
 
-    public function nameDataProvider(): Generator
+    public static function nameDataProvider(): Generator
     {
         yield['  *  ', '*/*'];
         yield['   type   /  subtype', 'type/subtype'];

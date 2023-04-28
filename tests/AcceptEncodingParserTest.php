@@ -40,7 +40,7 @@ final class AcceptEncodingParserTest extends TestCase
         $this->assertEquals($expected, $objs);
     }
 
-    public function validDataProvider(): Generator
+    public static function validDataProvider(): Generator
     {
         yield[
           '*;q=0, identity;q=0.5, gzip;q=1.0',
