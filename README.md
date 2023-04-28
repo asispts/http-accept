@@ -1,5 +1,8 @@
 [![Build](https://github.com/asispts/http-accept/actions/workflows/ci.yml/badge.svg)](https://github.com/asispts/http-accept/actions/workflows/ci.yml)
+[![Packagist PHP Version](https://img.shields.io/packagist/dependency-v/asispts/http-accept/php)](https://packagist.org/packages/asispts/http-accept)
+[![Packagist Version](https://img.shields.io/packagist/v/asispts/http-accept?label=stable)](https://packagist.org/packages/asispts/http-accept)
 [![License](https://img.shields.io/github/license/asispts/http-accept)](./LICENSE)
+
 
 # `http-accept` parser
 `http-accept` is a PHP parser designed to handle HTTP headers related to content negotiation. These headers include `Accept`, `Accept-Language`, `Accept-Encoding`, and `Content-Type`. The library provides parser classes for each of these headers, making it easy to extract the relevant information from incoming HTTP requests.
