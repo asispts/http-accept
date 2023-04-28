@@ -8,20 +8,16 @@ final class MimeValidator
 {
     public function validate(string $name): string
     {
-        if ($name === '*') {
+        if (\trim($name) === '*') {
             return '*/*';
         }
 
-        $parts   = \explode('/', $name);
-        $type    = $parts[0] ?? null;
-        $subtype = $parts[1] ?? null;
-
+        [$type, $subtype, $invalidPart] = \array_pad(\array_map('trim', \explode('/', $name)), 3, null);
         if (
-            \count($parts) > 2
-            || $type === null
-            || \trim($type) === ''
+            $invalidPart !== null
+            || $type === ''
             || $subtype === null
-            || \trim($subtype) === ''
+            || $subtype === ''
         ) {
             throw new InvalidArgumentException('Invalid media-type format');
         }
