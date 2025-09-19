@@ -1,52 +1,52 @@
 {
-    "name": "asispts/http-accept",
-    "description": "PHP Parser to deal with HTTP Accept, Accept-Language, Accept-Encoding, and Content-Type headers",
-    "keywords": [
-        "http-headers",
-        "http-header-parser",
-        "accept",
-        "accept-language",
-        "accept-encoding",
-        "content-type"
-    ],
-    "type": "library",
-    "license": "Apache-2.0",
-    "authors": [
-        {
-            "name": "Asis Pattisahusiwa",
-            "email": "asispts@gmail.com"
-        }
-    ],
-    "homepage": "https://github.com/asispts/http-accept",
-    "support": {
-        "issues": "https://github.com/asispts/http-accept/issues"
-    },
-    "minimum-stability": "stable",
-    "prefer-stable": true,
-    "config": {
-        "preferred-install": "dist",
-        "sort-packages": true,
-        "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
-        }
-    },
-    "autoload": {
-        "psr-4": {
-            "HttpAccept\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "HttpAccept\\Tests\\": "tests"
-        }
-    },
-    "require": {
-        "php": "^7.2|^8.0"
-    },
-    "require-dev": {
-        "asispts/ptscs": "^1.0",
-        "phpstan/phpstan": "^1.4",
-        "phpstan/phpstan-phpunit": "^1.0",
-        "phpunit/phpunit": "^8.5|^9.5|^10.0"
+  "name": "asispts/http-accept",
+  "description": "PHP parser for HTTP Accept, Accept-Language, Accept-Encoding, and Content-Type headers.",
+  "keywords": [
+    "http-headers",
+    "http-header-parser",
+    "accept",
+    "accept-language",
+    "accept-encoding",
+    "content-type"
+  ],
+  "type": "library",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "Asis Pattisahusiwa",
+      "email": "asispts@gmail.com"
     }
+  ],
+  "homepage": "https://github.com/asispts/http-accept",
+  "support": {
+    "issues": "https://github.com/asispts/http-accept/issues"
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "HttpAccept\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "HttpAccept\\Tests\\": "tests"
+    }
+  },
+  "require": {
+    "php": "^7.2|^8.0"
+  },
+  "require-dev": {
+    "asispts/ptscs": "^1.0",
+    "phpstan/phpstan": "^1.4",
+    "phpstan/phpstan-phpunit": "^1.0",
+    "phpunit/phpunit": "^8.5|^9.5|^10.0"
+  }
 }
