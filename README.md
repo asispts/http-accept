@@ -1,5 +1,10 @@
-# http-accept
-PHP parser for HTTP content negotiation headers
+<div align="center">
+  <samp>
+    <h1>http-accept</h1>
+    <h3>&raquo; PHP parser for HTTP content negotiation headers  &laquo;</h3>
+  </samp>
+  &nbsp;
+</div>
 
 [![Build](https://github.com/asispts/http-accept/actions/workflows/ci.yml/badge.svg)](https://github.com/asispts/http-accept/actions/workflows/ci.yml)
 [![License](https://img.shields.io/github/license/asispts/http-accept)](./LICENSE)
