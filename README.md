@@ -1,20 +1,33 @@
+# http-accept
+PHP parser for HTTP content negotiation headers
+
 [![Build](https://github.com/asispts/http-accept/actions/workflows/ci.yml/badge.svg)](https://github.com/asispts/http-accept/actions/workflows/ci.yml)
-[![Packagist PHP Version](https://img.shields.io/packagist/dependency-v/asispts/http-accept/php)](https://packagist.org/packages/asispts/http-accept)
-[![Packagist Version](https://img.shields.io/packagist/v/asispts/http-accept?label=stable)](https://packagist.org/packages/asispts/http-accept)
 [![License](https://img.shields.io/github/license/asispts/http-accept)](./LICENSE)
+[![PHP Version](https://img.shields.io/packagist/dependency-v/asispts/http-accept/php)](https://packagist.org/packages/asispts/http-accept)
+[![Stable Version](https://img.shields.io/packagist/v/asispts/http-accept?label=stable)](https://packagist.org/packages/asispts/http-accept)
+[![Downloads](https://img.shields.io/packagist/dt/asispts/http-accept)](https://packagist.org/packages/asispts/http-accept)
 
 
-# `http-accept` parser
-`http-accept` is a PHP parser designed to handle HTTP headers related to content negotiation. These headers include `Accept`, `Accept-Language`, `Accept-Encoding`, and `Content-Type`. The library provides parser classes for each of these headers, making it easy to extract the relevant information from incoming HTTP requests.
+`http-accept` is a PHP library for parsing HTTP headers used in content negotiation. It supports the following headers:
+- `Accept`
+- `Accept-Language`
+- `Accept-Encoding`
+- `Content-Type`
+
+Parser classes are provided for each header, making it straightforward to extract information from incoming requests.
+
 
 ## Installation
-You can install this library using [composer](https://getcomposer.org/).
+
+Install via [Composer](https://getcomposer.org/):
+
 ```bash
 composer require asispts/http-accept
 ```
 
 ## Usage
-To parse the different headers, use the corresponding parser class.
+
+Use the corresponding parser class for each header.
 
 ### Parse `Content-Type`
 ```php
@@ -37,7 +50,13 @@ $encodings = (new AcceptEncodingParser())->parse($source);
 ```
 
 ## Contributing
-All forms of contributions are welcome, including bug reports, feature requests, and pull requests. If you plan to make major changes, please open an issue first to discuss what you would like to change.
+
+Contributions are welcome—whether bug reports, feature requests, or pull requests.
+For major changes, please open an issue first to discuss your ideas.
+
+---
 
 ## License
-Released under [Apache-2.0 License](https://opensource.org/licenses/Apache-2.0). See [LICENSE](./LICENSE) file for more details.
+
+Licensed under the [Apache-2.0 License](https://opensource.org/licenses/Apache-2.0).
+See the [LICENSE](./LICENSE) file for details.
