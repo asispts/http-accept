@@ -12,7 +12,6 @@
 [![Stable Version](https://img.shields.io/packagist/v/asispts/http-accept?label=stable)](https://packagist.org/packages/asispts/http-accept)
 [![Downloads](https://img.shields.io/packagist/dt/asispts/http-accept)](https://packagist.org/packages/asispts/http-accept)
 <p>&nbsp;</p>
-<p>&nbsp;</p>
 
 `http-accept` is a PHP library for parsing HTTP headers used in content negotiation. It supports the following headers:
 - `Accept`
@@ -21,7 +20,6 @@
 - `Content-Type`
 
 Parser classes are provided for each header, making it straightforward to extract information from incoming requests.
-
 <p>&nbsp;</p>
 
 ## Installation
@@ -31,7 +29,6 @@ Install via [Composer](https://getcomposer.org/):
 ```bash
 composer require asispts/http-accept
 ```
-
 <p>&nbsp;</p>
 
 ## Usage
@@ -57,14 +54,12 @@ $languages = (new AcceptLanguageParser())->parse($source);
 ```php
 $encodings = (new AcceptEncodingParser())->parse($source);
 ```
-
 <p>&nbsp;</p>
 
 ## Contributing
 
 Contributions are welcome—whether bug reports, feature requests, or pull requests.
 For major changes, please open an issue first to discuss your ideas.
-
 <p>&nbsp;</p>
 
 ## License
